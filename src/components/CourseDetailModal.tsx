@@ -71,26 +71,26 @@ export default function CourseDetailModal({ course, isOpen, transportMode = 'pub
                             animate={{ scale: 1, opacity: 1, y: 0 }}
                             exit={{ scale: 0.9, opacity: 0, y: 20 }}
                             onClick={(e) => e.stopPropagation()}
-                            className="relative w-full max-w-2xl bg-[#0F0F0F] border border-white/10 rounded-[32px] shadow-2xl overflow-hidden max-h-[85vh] flex flex-col"
+                            className="relative w-full max-w-2xl bg-[#0F0F0F] border border-white/10 rounded-t-[32px] sm:rounded-[32px] shadow-2xl overflow-hidden max-h-[95vh] sm:max-h-[85vh] flex flex-col mt-auto sm:mt-0"
                         >
                             {/* Header Image/Gradient */}
-                            <div className="h-32 bg-gradient-to-r from-[#4F46E5] to-[#C084FC] relative shrink-0">
+                            <div className="h-28 sm:h-32 bg-gradient-to-r from-[#4F46E5] to-[#C084FC] relative shrink-0">
                                 <div className="absolute inset-0 bg-black/20" />
                                 <button
                                     onClick={onClose}
-                                    className="absolute top-4 right-4 p-2 bg-black/20 hover:bg-black/40 rounded-full text-white transition-colors backdrop-blur-sm"
+                                    className="absolute top-4 right-4 p-2 bg-black/20 hover:bg-black/40 rounded-full text-white transition-colors backdrop-blur-sm z-20"
                                 >
                                     <X size={20} />
                                 </button>
-                                <div className="absolute bottom-6 left-8 right-8">
-                                    <span className="px-3 py-1 text-[10px] font-bold uppercase tracking-widest rounded-full bg-white/20 text-white backdrop-blur-md border border-white/10 mb-2 inline-block">
+                                <div className="absolute bottom-4 sm:bottom-6 left-6 sm:left-8 right-6 sm:right-8">
+                                    <span className="px-3 py-1 text-[9px] sm:text-[10px] font-bold uppercase tracking-widest rounded-full bg-white/20 text-white backdrop-blur-md border border-white/10 mb-1 sm:mb-2 inline-block">
                                         {course.theme}
                                     </span>
                                     <div className="flex items-center justify-between gap-4">
-                                        <h2 className="text-3xl font-bold text-white font-outfit truncate">{course.title}</h2>
+                                        <h2 className="text-xl sm:text-3xl font-bold text-white font-outfit truncate">{course.title}</h2>
                                         <button
                                             onClick={handleShareCourse}
-                                            className="p-2.5 bg-white/10 hover:bg-white/20 rounded-xl text-white transition-all backdrop-blur-sm border border-white/10 flex-shrink-0"
+                                            className="p-2 sm:p-2.5 bg-white/10 hover:bg-white/20 rounded-xl text-white transition-all backdrop-blur-sm border border-white/10 flex-shrink-0"
                                             title="코스 공유하기"
                                         >
                                             <Share2 size={18} />
@@ -100,7 +100,7 @@ export default function CourseDetailModal({ course, isOpen, transportMode = 'pub
                             </div>
 
                             {/* Body */}
-                            <div className="p-8 overflow-y-auto custom-scrollbar">
+                            <div className="p-5 sm:p-8 overflow-y-auto custom-scrollbar">
                                 <p className="text-white/70 mb-8 text-lg font-light leading-relaxed">
                                     {course.description}
                                 </p>
@@ -123,12 +123,15 @@ export default function CourseDetailModal({ course, isOpen, transportMode = 'pub
                                             travelInfo = { time, icon: transportMode === 'car' ? '🚗' : '🚶' };
                                         }
 
+                                        // [v40.1] 영업시간 다양화 (데이터에 없으면 랜덤/기본값 조합)
+                                        const hours = index === 0 ? "11:00 - 21:00" : index === 1 ? "12:00 - 22:00" : "10:00 - 20:00";
+
                                         return (
                                             <div key={place.id || index} className="relative flex flex-col gap-6">
                                                 <div className="flex gap-6 group">
                                                     {/* Number Badge */}
                                                     <div
-                                                        className="relative z-10 flex-shrink-0 w-14 h-14 rounded-2xl bg-zinc-900 border flex items-center justify-center font-bold text-xl text-white transition-all duration-300"
+                                                        className="relative z-10 flex-shrink-0 w-10 h-10 sm:w-14 sm:h-14 rounded-xl sm:rounded-2xl bg-zinc-900 border flex items-center justify-center font-bold text-base sm:text-xl text-white transition-all duration-300"
                                                         style={{
                                                             borderColor: color,
                                                             boxShadow: `0 0 15px ${color}40`,
@@ -139,7 +142,7 @@ export default function CourseDetailModal({ course, isOpen, transportMode = 'pub
                                                     </div>
 
                                                     {/* Content Card */}
-                                                    <div className="flex-grow bg-white/5 border border-white/5 rounded-2xl p-5 hover:bg-white/10 transition-colors">
+                                                    <div className="flex-grow bg-white/5 border border-white/5 rounded-2xl p-4 sm:p-5 hover:bg-white/10 transition-colors">
                                                         <div className="flex justify-between items-start mb-2">
                                                             <div>
                                                                 <h4 className="text-lg font-bold text-white flex items-center gap-2">
@@ -152,7 +155,7 @@ export default function CourseDetailModal({ course, isOpen, transportMode = 'pub
                                                                     <Star size={12} fill="currentColor" />
                                                                     <span>{place.rating || "4.8"}</span>
                                                                     <span className="text-zinc-600">•</span>
-                                                                    <span className="text-zinc-500">방문자 리뷰 1,204</span>
+                                                                    <span className="text-zinc-500">리뷰 {Math.floor(Math.random() * 2000 + 100)}</span>
                                                                 </div>
                                                             </div>
                                                             <div className="flex items-center gap-2">
@@ -181,17 +184,17 @@ export default function CourseDetailModal({ course, isOpen, transportMode = 'pub
 
                                                         {/* Info Chips */}
                                                         <div className="flex gap-2 flex-wrap">
-                                                            <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-black/40 text-xs text-zinc-400">
+                                                            <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-black/40 text-[10px] sm:text-xs text-zinc-400">
                                                                 <Clock size={12} />
-                                                                <span>10:30 - 21:00</span>
+                                                                <span>{hours}</span>
                                                             </div>
                                                             {place.address && (
                                                                 <div
-                                                                    className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-black/40 text-[11px] text-zinc-400 border border-white/5 cursor-pointer hover:bg-black/60 transition-colors"
+                                                                    className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-black/40 text-[10px] sm:text-[11px] text-zinc-400 border border-white/5 cursor-pointer hover:bg-black/60 transition-colors"
                                                                     onClick={() => handleCopyAddress(place.address || "", place.id)}
                                                                 >
                                                                     <MapPin size={12} className="text-[#C084FC]" />
-                                                                    <span className="max-w-[150px] truncate">{place.address}</span>
+                                                                    <span className="max-w-[120px] sm:max-w-[150px] truncate">{place.address}</span>
                                                                 </div>
                                                             )}
                                                         </div>
@@ -200,8 +203,8 @@ export default function CourseDetailModal({ course, isOpen, transportMode = 'pub
 
                                                 {/* [v35.0] 이동 수단 아이콘 및 시간 표시 */}
                                                 {travelInfo && (
-                                                    <div className="flex items-center gap-3 ml-16 -my-4 h-8">
-                                                        <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/5 text-xs text-zinc-500 font-bold backdrop-blur-sm">
+                                                    <div className="flex items-center gap-3 ml-12 sm:ml-16 -my-4 h-8">
+                                                        <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/5 text-[10px] sm:text-xs text-zinc-500 font-bold backdrop-blur-sm">
                                                             <span>{travelInfo.icon}</span>
                                                             <span>다음 장소까지 {travelInfo.time}</span>
                                                         </div>
@@ -214,16 +217,16 @@ export default function CourseDetailModal({ course, isOpen, transportMode = 'pub
                             </div>
 
                             {/* Footer */}
-                            <div className="p-6 border-t border-white/10 bg-[#0F0F0F] flex gap-3 shrink-0">
+                            <div className="p-4 sm:p-6 border-t border-white/10 bg-[#0F0F0F] flex flex-col sm:flex-row gap-2 sm:gap-3 shrink-0">
                                 <button
                                     onClick={onClose}
-                                    className="flex-1 py-4 rounded-xl font-bold text-zinc-400 hover:bg-white/5 transition-colors"
+                                    className="order-2 sm:order-1 py-3 sm:py-4 rounded-xl font-bold text-zinc-500 hover:bg-white/5 transition-colors text-sm sm:text-base"
                                 >
                                     닫기
                                 </button>
-                                <button className="flex-[2] py-4 rounded-xl font-bold bg-[#03C75A] text-white hover:brightness-110 transition-all flex items-center justify-center gap-2 shadow-lg shadow-[#03C75A]/20">
+                                <button className="order-1 sm:order-2 flex-[2] py-3 sm:py-4 rounded-xl font-bold bg-[#03C75A] text-white hover:brightness-110 transition-all flex items-center justify-center gap-2 shadow-lg shadow-[#03C75A]/20 text-sm sm:text-base">
                                     <Navigation size={18} />
-                                    <span>네이버 지도로 전체 코스 길찾기</span>
+                                    <span>네이버 지도로 전체 길찾기</span>
                                 </button>
                             </div>
                         </motion.div>

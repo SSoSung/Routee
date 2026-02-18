@@ -82,12 +82,12 @@ export default function LuckyPicker({ onPick }: LuckyPickerProps) {
             <div className="absolute top-0 right-0 w-64 h-64 bg-[#818CF8]/10 blur-[100px] -z-10" />
             <div className="absolute bottom-0 left-0 w-64 h-64 bg-[#C084FC]/10 blur-[100px] -z-10" />
 
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 md:gap-12 items-center">
 
                 {/* Left: Map INTERACTION area */}
-                <div className="relative aspect-[3/4] bg-black/40 rounded-[32px] border border-white/10 overflow-hidden group shadow-inner">
+                <div className="relative aspect-square lg:aspect-[3/4] bg-black/40 rounded-[32px] border border-white/10 overflow-hidden group shadow-inner">
                     {/* Realistic KR Map SVG - Revised Path */}
-                    <div className="absolute inset-0 opacity-40 flex items-center justify-center p-6">
+                    <div className="absolute inset-0 opacity-40 flex items-center justify-center p-4 md:p-6">
                         <svg viewBox="0 0 200 300" className="w-full h-full text-[#818CF8] fill-current drop-shadow-[0_0_20px_rgba(129,140,248,0.3)]">
                             <path d="M30 10 L50 15 L70 12 L90 20 L110 30 L115 50 L120 70 L130 100 L140 130 L155 160 L160 190 L155 220 L150 240 L130 260 L100 275 L70 280 L40 270 L25 250 L15 220 L10 180 L15 140 L20 100 L25 50 Z" />
                             <circle cx="40" cy="285" r="14" /> {/* Jeju */}

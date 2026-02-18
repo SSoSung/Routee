@@ -203,6 +203,11 @@ export default function Home() {
 
     // [v2.0] 위자드 강제 오픈 대신 즉시 검색 수행
     loadData(search);
+
+    // [v40.0] 검색 시 결과 섹션으로 자동 스크롤
+    setTimeout(() => {
+      resultsRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 200);
   };
 
   // [v2.0] 테마 카드 클릭 핸들러
@@ -222,6 +227,11 @@ export default function Home() {
       theme: themeId as any,
       companion: undefined
     });
+
+    // [v40.0] 테마 클릭 시에도 스크롤
+    setTimeout(() => {
+      resultsRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 200);
   };
 
   // [v33.4] 필터 업데이트 핸들러
@@ -258,11 +268,11 @@ export default function Home() {
               당신의 완벽한 데이트를 위한 AI 가이드
             </div>
 
-            <h1 className="text-5xl md:text-7xl font-bold tracking-tight font-outfit">
+            <h1 className="text-4xl md:text-7xl font-bold tracking-tight font-outfit px-2">
               어디로 <span className="bg-gradient-to-r from-[#818CF8] via-[#C084FC] to-[#F472B6] bg-clip-text text-transparent">가고 싶으신가요?</span>
             </h1>
 
-            <p className="text-lg text-zinc-400 max-w-2xl leading-relaxed">
+            <p className="text-base md:text-lg text-zinc-400 max-w-2xl leading-relaxed px-4">
               성수, 홍대, 연남... 지역만 말씀해 주세요. <br />
               취향과 분위기에 딱 맞는 프리미엄 데이트 코스를 완성해 드립니다.
             </p>
@@ -271,20 +281,22 @@ export default function Home() {
             <div className="flex flex-col items-center gap-4 w-full max-w-2xl mt-4">
               <div className="w-full relative group">
                 <div className="absolute -inset-1 bg-gradient-to-r from-[#818CF8] to-[#C084FC] rounded-[24px] blur opacity-25 group-focus-within:opacity-50 transition duration-500"></div>
-                <div className="relative flex items-center bg-zinc-900 border border-white/10 rounded-[22px] px-6 py-4">
-                  <Search size={20} className="text-zinc-500" />
-                  <input
-                    type="text"
-                    placeholder="지역명 검색 (예: 성수동)"
-                    className="bg-transparent border-none focus:ring-0 text-white placeholder-zinc-500 ml-4 flex-grow text-lg outline-none"
-                    value={search}
-                    onChange={(e) => setSearch(e.target.value)}
-                    onKeyDown={(e) => e.key === "Enter" && handleSearch()}
-                  />
+                <div className="relative flex flex-col sm:flex-row items-center bg-zinc-900 border border-white/10 rounded-[28px] sm:rounded-[22px] p-2 sm:px-6 sm:py-4 gap-2">
+                  <div className="flex items-center flex-grow w-full px-4 py-2 sm:p-0">
+                    <Search size={20} className="text-zinc-500 flex-shrink-0" />
+                    <input
+                      type="text"
+                      placeholder="어디로 갈까요? (예: 성수, 홍대)"
+                      className="bg-transparent border-none focus:ring-0 text-white placeholder-zinc-500 ml-4 flex-grow text-lg outline-none w-full"
+                      value={search}
+                      onChange={(e) => setSearch(e.target.value)}
+                      onKeyDown={(e) => e.key === "Enter" && handleSearch()}
+                    />
+                  </div>
                   <button
                     onClick={handleSearch}
                     disabled={isLoading}
-                    className="bg-white text-black font-bold px-6 py-2.5 rounded-2xl hover:bg-zinc-200 transition-colors flex items-center gap-2"
+                    className="w-full sm:w-auto bg-white text-black font-bold px-8 py-3 sm:py-2.5 rounded-[20px] sm:rounded-2xl hover:bg-zinc-200 transition-colors flex items-center justify-center gap-2"
                   >
                     {isLoading ? <Loader2 size={18} className="animate-spin" /> : "검색"}
                   </button>
@@ -323,7 +335,7 @@ export default function Home() {
 
 
       {/* Content Section */}
-      <section ref={resultsRef} className="max-w-6xl mx-auto px-6 pb-32">
+      <section ref={resultsRef} className="max-w-6xl mx-auto px-6 pb-32 scroll-mt-24">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
           {/* Map Column */}
           <div className="h-[400px] lg:h-[600px] lg:sticky lg:top-10">
