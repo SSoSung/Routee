@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Naver Map Test</title>
+    <style>
+        body {
+            margin: 0;
+            background: #111;
+            color: white;
+            font-family: sans-serif;
+            padding: 20px;
+        }
+
+        #map {
+            width: 100%;
+            height: 400px;
+            border: 2px solid #818CF8;
+            border-radius: 16px;
+            margin-top: 20px;
+        }
+
+        #status {
+            margin: 20px 0;
+            padding: 16px;
+            background: #222;
+            border-radius: 12px;
+        }
+
+        .success {
+            color: #4ade80;
+        }
+
+        .error {
+            color: #f87171;
+        }
+
+        .info {
+            color: #818CF8;
+        }
+    </style>
+    <script>
+        function log(msg, type) {
+            type = type || 'info';
+            var el = document.getElementById('status');
+            if (el) el.innerHTML += '<p class="' + type + '">' + new Date().toLocaleTimeString() + ' - ' + msg + '</p>';
+            console.log(msg);
+        }
+
+        function onNaverLoad() {
+            log('✅ Naver Maps 스크립트 로드 성공!', 'success');
+
+            if (window.naver && window.naver.maps) {
+                log('✅ naver.maps 객체 확인됨!', 'success');
+
+                try {
+                    var map = new naver.maps.Map('map', {
+                        center: new naver.maps.LatLng(37.5445, 127.0561),
+                        zoom: 15
+                    });
+                    log('✅ 지도 생성 성공! 지도가 보여야 합니다.', 'success');
+
+                    new naver.maps.Marker({
+                        position: new naver.maps.LatLng(37.5445, 127.0561),
+                        map: map
+                    });
+                    log('✅ 마커 생성 성공!', 'success');
+                } catch (e) {
+                    log('❌ 지도 생성 에러: ' + e.message, 'error');
+                }
+            } else {
+                log('❌ naver.maps 객체가 없습니다', 'error');
+            }
+        }
+
+        function onNaverError() {
+            log('❌ Naver Maps 스크립트 로드 실패! 네트워크 또는 Client ID 확인 필요', 'error');
+        }
+    </script>
+</head>
+
+<body>
+    <h1>🗺️ Naver Maps API 테스트</h1>
+    <div id="status"></div>
+    <div id="map"></div>
+
+    <script>
+        log('1단계: 페이지 로드 완료');
+        log('2단계: 현재 URL → ' + window.location.href);
+        log('3단계: Naver Maps 스크립트 로딩 시작...');
+    </script>
+
+    <script src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=es44ukji8l" onload="onNaverLoad()"
+        onerror="onNaverError()"></script>
+
+    <script>
+        // 5초 후에도 로드되지 않으면 타임아웃
+        setTimeout(function () {
+            if (!window.naver || !window.naver.maps) {
+                log('⚠️ 5초 타임아웃: 스크립트가 로드되지 않았습니다.', 'error');
+                log('👉 브라우저 F12 → Console 탭에서 빨간 에러 메시지를 확인해 주세요!', 'error');
+                log('👉 특히 "Authentication failed" 또는 "Forbidden" 메시지가 있는지 확인!', 'error');
+            }
+        }, 5000);
+    </script>
+</body>
+
+</html>
